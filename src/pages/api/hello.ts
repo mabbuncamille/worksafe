@@ -15,9 +15,6 @@ export default async function handler(
       query: 'SELECT * FROM `roles`',
       values: [req.body.content],
     });
-    console.log(result, 'TESTING: RESULT');
     res.status(200).json(result);
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }

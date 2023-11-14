@@ -18,7 +18,6 @@ export default function Register() {
       },
       body: JSON.stringify({ data }),
     }).then((response) => {
-      console.log(response, 'RES');
       router.push('/');
     });
   }

@@ -1,9 +1,36 @@
 import RHFTextField from '@/components/hook-form/RHFTextField';
 import { paths } from '@/routes/paths';
+import { useRouter } from '@/routes/hooks/use-router';
 import { useForm, FormProvider } from 'react-hook-form';
 
 export default function Login() {
   const methods = useForm();
+  const router = useRouter();
+  const { handleSubmit } = methods;
+
+  async function login(data: any) {
+    //fetch return stream
+
+    await fetch('../api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ data }),
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw await response.json();
+        }
+
+        return response.json();
+      })
+      .then(() => {
+        router.push('/dashboard/app');
+      })
+      .catch((error) => {});
+  }
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -14,8 +41,13 @@ export default function Login() {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <FormProvider {...methods}>
-          <form action="#" className="space-y-6">
-            <RHFTextField name="email" label="Email" type="email" />
+          <form
+            className="space-y-6"
+            onSubmit={handleSubmit((data) => {
+              login(data);
+            })}
+          >
+            <RHFTextField name="userName" label="Username" />
             <RHFTextField
               name="password"
               label="Password"
