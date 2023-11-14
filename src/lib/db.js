@@ -11,8 +11,6 @@ const db = mysql({
   },
 });
 
-// ===TEMPORARY===
-// eslint-disable-next-line import/no-anonymous-default-export
 export default async function executeQuery({ query, values }) {
   try {
     const results = await db.query(query, values);
