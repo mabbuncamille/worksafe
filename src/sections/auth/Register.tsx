@@ -1,11 +1,13 @@
 import Select from '@/components/Select';
 import TextField from '@/components/TextField';
+import { useAuthContext } from '@/providers/auth-provider';
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 import Link from 'next/link';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 
-type RegisterFormValuesProps = {
+export type RegisterFormValuesProps = {
   fullName: string;
   email: string;
   username: string;
@@ -39,8 +41,25 @@ export default function Register() {
     resolver: yupResolver(registerSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data, 'DATA');
+  const { registerUser } = useAuthContext();
+
+  const roles = [
+    { id: 1, name: 'User' },
+    { id: 2, name: 'Admin' },
+  ];
+
+  const onSubmit = async (data: any) => {
+    try {
+      await registerUser(
+        data.fullName,
+        data.username,
+        data.email,
+        data.password,
+        data.role
+      );
+    } catch (error) {
+      console.log(error, 'ERROR');
+    }
   };
 
   return (
@@ -92,7 +111,7 @@ export default function Register() {
           <Select
             name="role"
             label="Role"
-            options={['User', 'Admin']}
+            options={roles}
             register={register}
           />
 
