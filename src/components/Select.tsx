@@ -3,7 +3,10 @@ import { UseFormRegister } from 'react-hook-form';
 type Props = {
   name: string;
   label: string;
-  options?: string[];
+  options?: {
+    id: number;
+    name: string;
+  }[];
   register: UseFormRegister<any>;
 };
 
@@ -20,8 +23,8 @@ export default function Select({ name, label, options, register }: Props) {
           {...register(name)}
         >
           {options?.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
+            <option key={opt.id} value={Number(opt.id)}>
+              {opt.name}
             </option>
           ))}
         </select>
