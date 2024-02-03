@@ -10,8 +10,6 @@ const primaryFont = Roboto_Flex({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  console.log('APP');
-
   return (
     <AuthProvider>
       <div className={`${primaryFont.className}`}>
