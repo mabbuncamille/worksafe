@@ -1,5 +1,6 @@
 import { User } from '@/auth/type';
 import executeQuery from '@/lib/db';
+
 import axios from '@/utils/axios';
 import {
   useCallback,
@@ -16,7 +17,6 @@ type Props = {
 type AuthContextType = {
   registerUser: (
     fullName: string,
-    username: string,
     email: string,
     password: string,
     role: string
@@ -29,18 +29,13 @@ export function AuthProvider({ children }: Props) {
   const [user, setUser] = useState(null);
 
   const registerUser = useCallback(
-    async (
-      fullName: string,
-      username: string,
-      email: string,
-      password: string,
-      role: string
-    ) => {
-      const data = { fullName, username, email, password, role };
-      const response = await axios.post('/api/auth/register', data);
-      // console.log(response, 'RESPONSE');
-      // const { user } = response.data;
-      // setUser(user);
+    async (fullName: string, email: string, password: string, role: string) => {
+      try {
+        const data = { fullName, email, password, role };
+        await axios.post('/api/auth/register', data);
+      } catch (error) {
+        console.log(error, 'AUTH PROVIDER');
+      }
     },
     []
   );

@@ -9,7 +9,7 @@ export default async function register(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { fullName, username, email, password, role } = await req.body;
+  const { fullName, email, password, role } = await req.body;
 
   try {
     const existingUser = await executeQuery({
@@ -27,11 +27,10 @@ export default async function register(
 
     const newUser = await executeQuery({
       query:
-        'INSERT INTO users (fullName, email, username, password, verified, accountCreated) VALUES (?, ?, ?, ?, ?, ?)',
+        'INSERT INTO users (fullName, email, password, verified, accountCreated) VALUES (?, ?, ?, ?, ?)',
       values: [
         fullName,
         email,
-        username,
         hashedPassword,
         0, // Default
         new Date().toISOString().split('T')[0],
@@ -51,13 +50,13 @@ export default async function register(
       port: 465,
       secure: true,
       auth: {
-        user: process.env.NEXT_PUBLIC_PERSONAL_EMAIL,
-        pass: process.env.NEXT_PUBLIC_EMAIL_PASSWORD,
+        user: process.env.NODEMAILER_PERSONAL_EMAIL,
+        pass: process.env.NODEMAILER_EMAIL_PASSWORD,
       },
     });
 
     const token: string = jwt.sign(
-      { newUserId, email, username },
+      { newUserId, email },
       process.env.JWT_SECRET as string,
       {
         expiresIn: '24h',

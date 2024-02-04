@@ -4,13 +4,13 @@ import { useAuthContext } from '@/providers/auth-provider';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import Link from 'next/link';
+import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 
 export type RegisterFormValuesProps = {
   fullName: string;
   email: string;
-  username: string;
   password: string;
   role: string;
 };
@@ -21,10 +21,6 @@ const registerSchema = yup.object({
     .string()
     .required('Email is required')
     .email('Invalid email address'),
-  username: yup
-    .string()
-    .required('Username is required')
-    .min(3, 'Username must be at least 3 characters'),
   password: yup
     .string()
     .required('Password is required')
@@ -42,7 +38,6 @@ export default function Register() {
   });
 
   const { registerUser } = useAuthContext();
-
   const roles = [
     { id: 1, name: 'User' },
     { id: 2, name: 'Admin' },
@@ -50,20 +45,14 @@ export default function Register() {
 
   const onSubmit = async (data: any) => {
     try {
-      await registerUser(
-        data.fullName,
-        data.username,
-        data.email,
-        data.password,
-        data.role
-      );
+      await registerUser(data.fullName, data.email, data.password, data.role);
     } catch (error) {
-      console.log(error, 'ERROR');
+      console.log(error, 'ERROR FORM');
     }
   };
 
   return (
-    <div className="border-red-600 sm:border-yellow-400 md:border-cyan-500  lg:border-lime-500  border-4 h-screen">
+    <div className="border-red-600 sm:border-yellow-400 md:border-cyan-500  lg:border-lime-500 border-4">
       <div>
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Create your account
@@ -78,7 +67,7 @@ export default function Register() {
       </div>
 
       <div className="max-w-sm sm:max-w-md p-6 bg-slate-100 rounded mx-auto mt-10">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <TextField
             name="fullName"
             label="Full name"
@@ -91,13 +80,6 @@ export default function Register() {
             label="Email"
             register={register}
             error={errors.email?.message}
-          />
-
-          <TextField
-            name="username"
-            label="Username"
-            register={register}
-            error={errors.username?.message}
           />
 
           <TextField
