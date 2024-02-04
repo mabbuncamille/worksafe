@@ -20,10 +20,12 @@ export default function TextField({
       <label className="text-black block uppercase text-sm" htmlFor="firstName">
         {label}
       </label>
-      <div className="mt-2">
+      <div className="mt-1">
         <input
           type={type}
-          className="text-black w-full border-0 rounded-lg"
+          className={`text-black w-full rounded-lg ${
+            error ? 'border-red-500' : 'border-0'
+          }`}
           {...register(name)}
         />
         {error && <p className="mt-2 text-xs text-red-500">{error}</p>}
