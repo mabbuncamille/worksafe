@@ -32,6 +32,7 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<RegisterFormValuesProps>({
     resolver: yupResolver(registerSchema),
@@ -46,8 +47,10 @@ export default function Register() {
   const onSubmit = async (data: any) => {
     try {
       await registerUser(data.fullName, data.email, data.password, data.role);
-    } catch (error) {
-      console.log(error, 'ERROR FORM');
+    } catch (error: any) {
+      if (error) {
+        setError('email', { message: error.message });
+      }
     }
   };
 

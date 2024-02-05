@@ -73,9 +73,9 @@ export default async function register(
     };
 
     await transporter.sendMail(mailOptions);
-    res
-      .status(200)
-      .json({ message: 'Registration successful. Verification email sent.' });
+    res.status(200).json({
+      message: 'Registration successful. Verification email sent.',
+    });
   } catch (error) {
     console.log(error, 'ERROR');
     res.status(500).json({ message: 'Internal server error' });

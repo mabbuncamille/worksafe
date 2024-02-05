@@ -30,12 +30,8 @@ export function AuthProvider({ children }: Props) {
 
   const registerUser = useCallback(
     async (fullName: string, email: string, password: string, role: string) => {
-      try {
-        const data = { fullName, email, password, role };
-        await axios.post('/api/auth/register', data);
-      } catch (error) {
-        console.log(error, 'AUTH PROVIDER');
-      }
+      const data = { fullName, email, password, role };
+      await axios.post('/api/auth/register', data);
     },
     []
   );
