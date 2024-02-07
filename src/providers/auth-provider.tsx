@@ -1,14 +1,5 @@
-import { User } from '@/auth/type';
-import executeQuery from '@/lib/db';
-
 import axios from '@/utils/axios';
-import {
-  useCallback,
-  useMemo,
-  useState,
-  createContext,
-  useContext,
-} from 'react';
+import { useCallback, useMemo, createContext, useContext } from 'react';
 
 type Props = {
   children: React.ReactNode;
@@ -21,26 +12,39 @@ type AuthContextType = {
     password: string,
     role: string
   ) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState(null);
-
   const registerUser = useCallback(
     async (fullName: string, email: string, password: string, role: string) => {
-      const data = { fullName, email, password, role };
-      await axios.post('/api/auth/register', data);
+      await axios.post('/api/auth/register', {
+        fullName,
+        email,
+        password,
+        role,
+      });
     },
     []
   );
 
+  const login = useCallback(async (email: string, password: string) => {
+    const response = await axios.post('/api/auth/login', {
+      email,
+      password,
+    });
+
+    console.log(response, 'RESPONSE');
+  }, []);
+
   const memoizedValue = useMemo(
     () => ({
       registerUser,
+      login,
     }),
-    [registerUser]
+    [registerUser, login]
   );
 
   return (
