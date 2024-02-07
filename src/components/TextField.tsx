@@ -17,7 +17,7 @@ export default function TextField({
 }: Props) {
   return (
     <div>
-      <label className="text-black block uppercase text-sm" htmlFor="firstName">
+      <label className="text-black block text-sm" htmlFor="firstName">
         {label}
       </label>
       <div className="mt-1">
