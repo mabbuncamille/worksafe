@@ -4,6 +4,7 @@ import { useAuthContext } from '@/providers/auth-provider';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
@@ -37,20 +38,32 @@ export default function Register() {
   } = useForm<RegisterFormValuesProps>({
     resolver: yupResolver(registerSchema),
   });
+  const router = useRouter();
 
   const { registerUser } = useAuthContext();
+  const [loading, setLoading] = useState(false);
+
   const roles = [
     { id: 1, name: 'User' },
     { id: 2, name: 'Admin' },
   ];
 
   const onSubmit = async (data: any) => {
+    setLoading(true);
     try {
       await registerUser(data.fullName, data.email, data.password, data.role);
+      router.push({
+        pathname: '/auth/checkEmail',
+        query: {
+          email: data.email,
+        },
+      });
     } catch (error: any) {
       if (error) {
         setError('email', { message: error.message });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,8 +116,9 @@ export default function Register() {
           <button
             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500"
             type="submit"
+            disabled={loading}
           >
-            Create account
+            {loading ? 'Creating account...' : 'Create account'}
           </button>
         </form>
       </div>
