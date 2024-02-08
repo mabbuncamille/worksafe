@@ -1,9 +1,7 @@
 import executeQuery from '@/lib/db';
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
-import { paths } from '@/routes/paths';
+import { sendEmail } from '@/utils/mailer';
 
 export default async function register(
   req: NextApiRequest,
@@ -44,35 +42,7 @@ export default async function register(
       values: [newUserId, Number(role)],
     });
 
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.NODEMAILER_PERSONAL_EMAIL,
-        pass: process.env.NODEMAILER_EMAIL_PASSWORD,
-      },
-    });
-
-    const token: string = jwt.sign(
-      { newUserId, email },
-      process.env.JWT_SECRET as string,
-      {
-        expiresIn: '24h',
-      }
-    );
-
-    const url = `${process.env.DOMAIN}${paths.auth.verify}?token=${token}`;
-
-    let mailOptions = {
-      from: 'mabbuncamille@gmail.com',
-      to: email,
-      subject: 'Verify Your Email Address',
-      html: `Please click this email to confirm your email: <a href="${url}">${url}</a>`,
-    };
-
-    await transporter.sendMail(mailOptions);
+    await sendEmail(email, { newUserId, email });
     res.status(200).json({
       message: 'Registration successful. Verification email sent.',
     });
