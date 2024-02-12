@@ -24,7 +24,7 @@ export default function Login() {
   const onSubmit = async (data: any) => {
     try {
       await login(data.email, data.password);
-      router.push('/dashboard/app');
+      router.push('/home');
     } catch (error: any) {
       setShowError(true);
       console.log(error, 'ERROR');

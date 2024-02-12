@@ -7,12 +7,12 @@ export function middleware(request: NextRequest) {
 
   if (url === '/') {
     if (token) {
-      return NextResponse.redirect(new URL('/dashboard/app', request.url));
+      return NextResponse.redirect(new URL('/home', request.url));
     }
     return NextResponse.next();
   }
 
-  if (url.startsWith('/dashboard/app')) {
+  if (url.startsWith('/home')) {
     if (!token) {
       return NextResponse.redirect(new URL('/', request.url));
     }
@@ -21,5 +21,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/dashboard/app'],
+  matcher: ['/', '/home'],
 };
