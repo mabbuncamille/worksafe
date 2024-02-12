@@ -14,6 +14,13 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        theme: {
+          primary: '#F5F5F5',
+        },
+        primary: '#7030A0',
+        'primary-light': '#8A55B1',
+      },
     },
     fontFamily: {
       robotoFlex: ['var(--font-roboto-flex)'],
