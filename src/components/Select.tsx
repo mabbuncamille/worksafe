@@ -13,7 +13,10 @@ type Props = {
 export default function Select({ name, label, options, register }: Props) {
   return (
     <div>
-      <label className="text-black block text-sm" htmlFor="firstName">
+      <label
+        className="text-black block text-sm uppercase font-semibold"
+        htmlFor="firstName"
+      >
         {label}
       </label>
       <div className="mt-2">

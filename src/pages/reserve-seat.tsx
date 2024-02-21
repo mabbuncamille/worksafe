@@ -48,34 +48,40 @@ export default function ReserveSeatPage() {
     <div>
       <Header />
 
-      <div>
-        <h1>Why are you going to the office?</h1>
-        <p>Please select a reason.</p>
+      <div className="text-center py-8">
+        <p className="text-primary-light font-bold">
+          Why are you going to the office?
+        </p>
+        <p className="text-sm">Please select a reason.</p>
       </div>
 
       <div className="mx-auto w-11/12">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="border p-2">
-            <Select
-              name="reason"
-              label="Reason"
-              options={reasonOpts}
-              register={register}
-            />
-            <TextField
-              name="additionalInfo"
-              label="Additional Information"
-              register={register}
-            />
+          <div className="border p-4 flex gap-4 shadow mb-4">
+            <div className="flex-1">
+              <Select
+                name="reason"
+                label="Reason"
+                options={reasonOpts}
+                register={register}
+              />
+            </div>
+            <div className="flex-1">
+              <TextField
+                name="additionalInfo"
+                label="Additional Information"
+                register={register}
+              />
+            </div>
           </div>
 
-          <div className="border p-4">
-            <p className="font-bold uppercase">Building</p>
+          <div className="border p-4 shadow mb-4">
+            <p className="font-bold text-sm uppercase mb-2">Building</p>
             <RadioGroup value={bldgOpts} register={register} />
           </div>
 
-          <div className="border p-4">
-            <p className="font-bold uppercase">Floors</p>
+          <div className="border p-4 shadow mb-4">
+            <p className="font-bold text-sm uppercase mb-2">Floors</p>
             <RadioGroup value={floorsOpts} register={register} />
           </div>
 

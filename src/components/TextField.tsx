@@ -17,10 +17,13 @@ export default function TextField({
 }: TextFieldProps) {
   return (
     <div>
-      <label className="text-black block text-sm" htmlFor="firstName">
+      <label
+        className="text-black block text-sm uppercase font-semibold"
+        htmlFor="firstName"
+      >
         {label}
       </label>
-      <div className="mt-1">
+      <div className="mt-2">
         <input
           type={type}
           className={`text-black w-full rounded-lg ${
