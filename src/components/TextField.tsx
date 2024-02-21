@@ -1,6 +1,6 @@
 import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 
-type Props = {
+type TextFieldProps = {
   label: string;
   name: string;
   type?: string;
@@ -14,7 +14,7 @@ export default function TextField({
   type = 'text',
   register,
   error,
-}: Props) {
+}: TextFieldProps) {
   return (
     <div>
       <label className="text-black block text-sm" htmlFor="firstName">
