@@ -3,6 +3,7 @@ import DatePicker from '@/components/DatePicker';
 import RadioGroup from '@/components/RadioGroup';
 import Select from '@/components/Select';
 import TextField from '@/components/TextField';
+import TimePicker from '@/components/TimePicker';
 import Header from '@/sections/home/Header';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -48,6 +49,8 @@ export default function ReserveSeatPage() {
 
   const [selectedDateFrom, setSelectedDateFrom] = useState(new Date());
   const [selectedDateTo, setSelectedDateTo] = useState(new Date());
+  const [selectedTimeIn, setSelectedTimeIn] = useState(new Date());
+  const [selectedTimeOut, setSelectedTimeOut] = useState(new Date());
 
   const handleDateFromChange = (date: Date) => {
     setSelectedDateFrom(date);
@@ -56,6 +59,16 @@ export default function ReserveSeatPage() {
 
   const handleDateToChange = (date: Date) => {
     setSelectedDateTo(date);
+    console.log(date, 'DATE');
+  };
+
+  const handleTimeInChange = (date: Date) => {
+    setSelectedTimeIn(date);
+    console.log(date, 'DATE');
+  };
+
+  const handleTimeOutChange = (date: Date) => {
+    setSelectedTimeOut(date);
     console.log(date, 'DATE');
   };
 
@@ -114,8 +127,16 @@ export default function ReserveSeatPage() {
               />
             </div>
             <div>
-              <p>TIME IN</p>
-              <p>TIME OUT</p>
+              <TimePicker
+                label="Time In"
+                selectedDate={selectedTimeIn}
+                onChange={handleTimeInChange}
+              ></TimePicker>
+              <TimePicker
+                label="Time Out"
+                selectedDate={selectedTimeOut}
+                onChange={handleTimeOutChange}
+              ></TimePicker>
             </div>
             <div>
               <p>SEAT NUMBER</p>
