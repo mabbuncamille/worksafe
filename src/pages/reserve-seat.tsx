@@ -1,8 +1,10 @@
 import Button from '@/components/Button';
+import DatePicker from '@/components/DatePicker';
 import RadioGroup from '@/components/RadioGroup';
 import Select from '@/components/Select';
 import TextField from '@/components/TextField';
 import Header from '@/sections/home/Header';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function ReserveSeatPage() {
@@ -43,6 +45,19 @@ export default function ReserveSeatPage() {
     { name: 'floor', id: '11F', label: '11F' },
     { name: 'floor', id: '12F', label: '12F' },
   ];
+
+  const [selectedDateFrom, setSelectedDateFrom] = useState(new Date());
+  const [selectedDateTo, setSelectedDateTo] = useState(new Date());
+
+  const handleDateFromChange = (date: Date) => {
+    setSelectedDateFrom(date);
+    console.log(date, 'DATE');
+  };
+
+  const handleDateToChange = (date: Date) => {
+    setSelectedDateTo(date);
+    console.log(date, 'DATE');
+  };
 
   return (
     <div>
@@ -87,8 +102,16 @@ export default function ReserveSeatPage() {
 
           <div className="flex">
             <div>
-              <p>DATE FROM</p>
-              <p>DATE TO</p>
+              <DatePicker
+                label="Date From"
+                selectedDate={selectedDateFrom}
+                onChange={handleDateFromChange}
+              />
+              <DatePicker
+                label="Date To"
+                selectedDate={selectedDateTo}
+                onChange={handleDateToChange}
+              />
             </div>
             <div>
               <p>TIME IN</p>
