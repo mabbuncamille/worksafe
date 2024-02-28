@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import ReactDatePicker from 'react-datepicker';
-import { LuClock } from 'react-icons/lu';
+import { FaClock } from 'react-icons/fa6';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface DatePickerComponentProps {
@@ -28,11 +28,11 @@ export default function TimePicker({
           type="text"
           value={value}
           onClick={onClick}
-          className="border"
+          className="block border-0 rounded-md shadow-sm w-full ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-light"
           readOnly
         />
-        <div className="absolute inset-y-0 right-2 flex items-center ps-3.5 pointer-events-none">
-          <LuClock />
+        <div className="absolute inset-y-0 right-2 flex items-center ps-3.5 pointer-events-none text-gray-500">
+          <FaClock />
         </div>
       </div>
     )

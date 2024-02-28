@@ -7,6 +7,8 @@ import TimePicker from '@/components/TimePicker';
 import Header from '@/sections/home/Header';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Image from 'next/image';
+import { MdGroups } from 'react-icons/md';
 
 export default function ReserveSeatPage() {
   const {
@@ -72,6 +74,14 @@ export default function ReserveSeatPage() {
     console.log(date, 'DATE');
   };
 
+  const seats = [
+    { id: 1, name: '001' },
+    { id: 2, name: '002' },
+    { id: 3, name: '003' },
+    { id: 4, name: '004' },
+    { id: 5, name: '005' },
+  ];
+
   return (
     <div>
       <Header />
@@ -113,8 +123,8 @@ export default function ReserveSeatPage() {
             <RadioGroup value={floorsOpts} register={register} />
           </div>
 
-          <div className="flex">
-            <div>
+          <div className="lg:flex lg:space-x-6">
+            <div className="lg:flex-1 space-y-4 mb-4">
               <DatePicker
                 label="Date From"
                 selectedDate={selectedDateFrom}
@@ -126,7 +136,7 @@ export default function ReserveSeatPage() {
                 onChange={handleDateToChange}
               />
             </div>
-            <div>
+            <div className="lg:flex-1 space-y-4 mb-4">
               <TimePicker
                 label="Time In"
                 selectedDate={selectedTimeIn}
@@ -138,15 +148,37 @@ export default function ReserveSeatPage() {
                 onChange={handleTimeOutChange}
               ></TimePicker>
             </div>
-            <div>
-              <p>SEAT NUMBER</p>
+            <div className="lg:flex-1">
+              <Select
+                name="seatNumber"
+                label="Seat Number"
+                options={seats}
+                register={register}
+              />
             </div>
-            <div>
+            <div className="lg:flex-1 mt-7">
               <Button>Reserve a seat</Button>
             </div>
-            <div>
-              <p>Available Seats</p>
+            <div className="border p-4 shadow mb-4 lg:flex-auto lg:w-1/4">
+              <p className="font-bold text-sm uppercase mb-2">
+                Available Seats
+              </p>
+              <div className="flex space-x-4">
+                <MdGroups className="text-2xl" />
+                <p>273</p>
+              </div>
             </div>
+          </div>
+
+          <div className="mt-4 mb-10">
+            <Image
+              src="/images/8thFlr-overview.png"
+              alt="8th Floor Overview"
+              layout="responsive"
+              objectFit="contain"
+              width={100}
+              height={56}
+            ></Image>
           </div>
         </form>
       </div>

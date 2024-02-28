@@ -14,9 +14,9 @@ type RadioGroupProps = {
 
 export default function RadioGroup({ value, register }: RadioGroupProps) {
   return (
-    <div className="flex space-x-2">
+    <div className="flex flex-wrap">
       {value.map((list, index) => (
-        <div key={index}>
+        <div key={index} className="mr-2 mb-2">
           <input
             type="radio"
             id={list.id}

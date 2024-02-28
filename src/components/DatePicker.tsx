@@ -28,10 +28,10 @@ export default function DatePicker({
           type="text"
           value={value}
           onClick={onClick}
-          className="border"
+          className="block border-0 rounded-md shadow-sm w-full ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-light"
           readOnly
         />
-        <div className="absolute inset-y-0 right-2 flex items-center ps-3.5 pointer-events-none">
+        <div className="absolute inset-y-0 right-2 flex items-center ps-3.5 pointer-events-none text-gray-500">
           <FaCalendarDay />
         </div>
       </div>
